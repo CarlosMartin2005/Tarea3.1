@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "958499718962",
+    "project_id": "votaciones-lp24",
+    "storage_bucket": "votaciones-lp24.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958499718962:android:761db95935b3b72940b92b",
+        "android_client_info": {
+          "package_name": "hn.edu.unah.votaciones_bandasrock_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN24qg927Va3pERFKwcSxfGuXfcAa12qY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
