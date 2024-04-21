@@ -25,10 +25,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const BandasPage(title: 'Bandas de Rock'),
+      home: const BandasPage(),
       routes: {
         '/crear_banda': (context) => CrearBanda(),
-        '/bandas' : (context) => const BandasPage(title: 'Bandas de Rock'),
+        '/bandas' : (context) => const BandasPage(),
       },
     );
   }
