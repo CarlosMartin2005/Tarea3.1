@@ -51,7 +51,7 @@ class CrearBandaState extends State<CrearBanda>{
         nombreController.text = value['nombre'];
         albumController.text = value['album'];
         lanzamientoController.text = value['año de lanzamiento'].toString();
-        votoController.text = value['año de lanzamiento'].toString();
+        votoController.text = value['voto'].toString();
       });
     }
     return Scaffold(
@@ -138,31 +138,70 @@ class CrearBandaState extends State<CrearBanda>{
 
                         final ImagePicker picker = ImagePicker();
 
-                      final XFile? image =
-                          await picker.pickImage(source: ImageSource.gallery);
+                        final bool? TomarFoto = await showDialog<bool>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Tomar foto'),
+                              content: const Text('¿Desea tomar una foto?'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text('No'),
+                                  onPressed: () async{
+                                    final data = {
+                                      'nombre': nombreController.text,
+                                      'album': albumController.text,
+                                      'lanzamiento': int.parse(lanzamientoController.text),
+                                      'voto': int.parse(votoController.text),
+                                      'url' : 'https://www.crushpixel.com/big-static15/preview4/indie-rock-music-band-black-2130446.jpg',
+                                    };
 
-                      if (image == null) return;
+                                    try {
+                                      final instance = FirebaseFirestore.instance;
+                                      final respuesta = await instance.collection('bandas').add(data);
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                        content: Text('Banda creada con foto de álbum por defecto.'),
+                                        backgroundColor: Colors.blue,)
+                                      );
+                                      print('Banda agregado con ID: ${respuesta.id}');
+                                    } catch (e) {
+                                      print('Error al agregar usuario: $e');
+                                    }
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text('Sí'),
+                                  onPressed: () async {
+                                    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
-                      final url = await subirFoto(image.path);
+                                    if (image == null) return;
 
-                      print(url);
+                                    final url = await subirFoto(image.path);
 
-                        final data = {
-                          'nombre': nombreController.text,
-                          'album': albumController.text,
-                          'lanzamiento': int.parse(lanzamientoController.text),
-                          'voto': int.parse(votoController.text),
-                          'url' : url,
-                        };
+                                    final data = {
+                                      'nombre': nombreController.text,
+                                      'album': albumController.text,
+                                      'lanzamiento': int.parse(lanzamientoController.text),
+                                      'voto': int.parse(votoController.text),
+                                      'url' : url,
+                                    };
 
-                        try {
-                          final instance = FirebaseFirestore.instance;
-                          final respuesta = await instance.collection('bandas').add(data);
-                          print('Banda agregado con ID: ${respuesta.id}');
-                        } catch (e) {
-                          print('Error al agregar usuario: $e');
-                        }
-                        
+                                    try {
+                                      final instance = FirebaseFirestore.instance;
+                                      final respuesta = await instance.collection('bandas').add(data);
+                                      print('Banda agregado con ID: ${respuesta.id}');
+                                    } catch (e) {
+                                      print('Error al agregar usuario: $e');
+                                    }
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       }
                       Navigator.pop(context);
                     },

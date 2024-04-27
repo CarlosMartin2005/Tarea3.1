@@ -16,8 +16,7 @@ class _BandasPageState extends State<BandasPage> {
   @override
   Widget build(BuildContext context) {
     final bandas = firestore.collection('bandas').snapshots();
-    final String imagenUrl = widget.imagenUrl ?? 'https://www.crushpixel.com/big-static15/preview4/indie-rock-music-band-black-2130446.jpg';
-
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
